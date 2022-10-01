@@ -13,12 +13,18 @@ public class TimerController : MonoBehaviour {
 
     DOVirtual
         .Float(startValue, endValue, Mathf.Abs(endValue - startValue), v => TimerValue.SetText($"{v:N2}"))
+        .SetEase(Ease.Linear)
         .SetLink(TimerValue.gameObject)
         .SetId(TimerValue.GetInstanceID());
   }
 
   public void StopTimer() {
     DOTween.Kill(TimerValue.GetInstanceID());
+
+    DOTween.Sequence()
+        .SetLink(TimerValue.gameObject)
+        .SetId(TimerValue.GetInstanceID())
+        .Insert(0f, TimerValue.transform.DOShakePosition(1f, 10f));
   }
 }
 
