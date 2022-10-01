@@ -1,5 +1,8 @@
+using DG.Tweening;
+
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
 public class UpDown : MonoBehaviour
@@ -7,22 +10,38 @@ public class UpDown : MonoBehaviour
     public float moleTimeUp = 1f;
     public float moleSpeed = .00001f;
 
-    void Update()
-    {
-        //StartCoroutine(moleGoesUp(moleTimeUp));
+    public float molePopupDelay = 2f;
+    public float molePopupTargetY = -0.051f;
+    public float molePopupDuration = 5f;
+    public float molePopupWait = 1f;
 
+    private void Start() {
+      var originalY = transform.position.y;
 
-        moleGoesUp(moleTimeUp);
-
+      DOTween.Sequence()
+        .AppendInterval(molePopupDelay)
+        .Append(transform.DOMoveY(molePopupTargetY, molePopupDuration))
+        .AppendInterval(molePopupWait)
+        .Append(transform.DOMoveY(originalY, molePopupDuration))
+        .SetTarget(gameObject);
     }
 
-    void moleGoesUp(float timeUp)
-    {
-        if ( transform.position.y <= -0.051f)
-        {
-            transform.Translate(0, (.1f * Time.deltaTime), 0); // This works but it doesn't stop at a certain point
-        }
-    }
+  //void Update()
+  //  {
+  //      //StartCoroutine(moleGoesUp(moleTimeUp));
+
+
+  //      moleGoesUp(moleTimeUp);
+
+  //  }
+
+  //  void moleGoesUp(float timeUp)
+  //  {
+  //      if ( transform.position.y <= -0.051f)
+  //      {
+  //          transform.Translate(0, (.1f * Time.deltaTime), 0); // This works but it doesn't stop at a certain point
+  //      }
+  //  }
 
 
     //IEnumerator moleGoesUp(float timeUp)
