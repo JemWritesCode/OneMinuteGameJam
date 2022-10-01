@@ -12,16 +12,17 @@ public class ScoreController : MonoBehaviour {
   public TMPro.TMP_Text ScoreValue { get; private set; }
 
   public void SetScoreValue(int value) {
-    ScoreValue.DOKill();
+    DOTween.Kill(ScoreValue.GetInstanceID());
     ScoreValue.SetText($"{value:G0}");
   }
 
   public void LerpScoreValue(int startValue, int endValue, float duration) {
-    ScoreValue.DOKill();
+    DOTween.Kill(ScoreValue.GetInstanceID());
 
     DOVirtual
-      .Int(startValue, endValue, duration, v => ScoreValue.SetText($"{v:G0}"))
-      .SetLink(ScoreValue.gameObject);
+        .Int(startValue, endValue, duration, v => ScoreValue.SetText($"{v:G0}"))
+        .SetLink(ScoreValue.gameObject)
+        .SetId(ScoreValue.GetInstanceID());
   }
 }
 
