@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour {
     _mouseClickListener.OnLeftMouseButtonDown += (_, position) => {
       int points = Random.Range(1, 5) * 100;
 
-      ScoreController.LerpScoreValue(_currentScore, _currentScore + points, 0.5f);
+      ScoreController.LerpScoreValue(_currentScore, _currentScore + points, 0.5f, PopupController.HitLabel.faceColor);
       _currentScore += points;
 
       PopupController.PopupHit(position, $"+{points:N0}");
@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour {
     _mouseClickListener.OnRightMouseButtonDown += (_, position) => {
       int points = Random.Range(1, 5) * 100;
 
-      ScoreController.LerpScoreValue(_currentScore, _currentScore - points, 0.5f);
+      ScoreController.LerpScoreValue(_currentScore, _currentScore - points, 0.5f, PopupController.MissLabel.faceColor);
       _currentScore -= points;
 
       PopupController.PopupMiss(position, $"-{points:N0}");

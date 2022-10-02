@@ -10,16 +10,17 @@ public class ScoreController : MonoBehaviour {
   public TMPro.TMP_Text ScoreValue { get; private set; }
 
   public void SetScoreValue(int value) {
-    DOTween.Kill(ScoreValue.GetInstanceID());
+    DOTween.Kill(ScoreValue.GetInstanceID(), complete: true);
     ScoreValue.SetText($"{value:G0}");
   }
 
-  public void LerpScoreValue(int startValue, int endValue, float duration) {
-    DOTween.Kill(ScoreValue.GetInstanceID());
+  public void LerpScoreValue(int startValue, int endValue, float duration, Color lerpColor) {
+    DOTween.Kill(ScoreValue.GetInstanceID(), complete: true);
 
-    DOVirtual
-        .Int(startValue, endValue, duration, v => ScoreValue.SetText($"{v:G0}"))
+    DOTween.Sequence()
         .SetLink(ScoreValue.gameObject)
-        .SetId(ScoreValue.GetInstanceID());
+        .SetId(ScoreValue.GetInstanceID())
+        .Insert(0f, ScoreValue.DOCounter(startValue, endValue, duration, false))
+        .Insert(0f, ScoreValue.DOColor(lerpColor, duration / 2f).SetLoops(2, LoopType.Yoyo));
   }
 }

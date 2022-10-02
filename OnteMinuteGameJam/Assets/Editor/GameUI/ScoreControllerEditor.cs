@@ -45,6 +45,7 @@ public class ScoreControllerEditor : Editor {
   private int _lerpScoreStartValue = 0;
   private int _lerpScoreEndValue = 100;
   private float _lerpScoreDuration = 0.5f;
+  private Color _lerpScoreColor = Color.white;
 
   private void LerpScoreValueGUI() {
     _lerpScoreHeaderGroup = EditorGUILayout.BeginFoldoutHeaderGroup(_lerpScoreHeaderGroup, "LerpScoreValue");
@@ -53,9 +54,10 @@ public class ScoreControllerEditor : Editor {
       _lerpScoreStartValue = EditorGUILayout.IntField("StartValue", _lerpScoreStartValue);
       _lerpScoreEndValue = EditorGUILayout.IntField("EndValue", _lerpScoreEndValue);
       _lerpScoreDuration = EditorGUILayout.Slider("Duration", _lerpScoreDuration, 0f, 5f);
+      _lerpScoreColor = EditorGUILayout.ColorField("Color", _lerpScoreColor);
 
       if (GUILayout.Button("LerpScoreValue", GUILayout.MinWidth(125f))) {
-        _scoreController.LerpScoreValue(_lerpScoreStartValue, _lerpScoreEndValue, _lerpScoreDuration);
+        _scoreController.LerpScoreValue(_lerpScoreStartValue, _lerpScoreEndValue, _lerpScoreDuration, _lerpScoreColor);
       }
     }
 
