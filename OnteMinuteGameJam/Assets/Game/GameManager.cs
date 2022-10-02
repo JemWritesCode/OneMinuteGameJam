@@ -13,26 +13,37 @@ public class GameManager : MonoBehaviour {
   [field: SerializeField]
   public PopupController PopupController { get; private set; }
 
-  private GameObject _gameState;
   private MouseClickListener _mouseClickListener;
+  private int _currentScore = 0;
 
   public void StartNewGame() {
-    if (_gameState) {
-      Destroy(_gameState);
+    if (_mouseClickListener) {
+      Destroy(_mouseClickListener);
     }
 
-    _gameState = new("GameState");
-    _mouseClickListener = _gameState.AddComponent<MouseClickListener>();
+    _mouseClickListener = gameObject.AddComponent<MouseClickListener>();
 
     _mouseClickListener.OnLeftMouseButtonDown += (_, position) => {
-      PopupController.PopupHit(position, $"+{(Random.Range(1, 5) * 100):N0}");
+      int points = Random.Range(1, 5) * 100;
+
+      ScoreController.LerpScoreValue(_currentScore, _currentScore + points, 0.5f);
+      _currentScore += points;
+
+      PopupController.PopupHit(position, $"+{points:N0}");
     };
 
     _mouseClickListener.OnRightMouseButtonDown += (_, position) => {
-      PopupController.PopupMiss(position, $"-{(Random.Range(1, 5) * 100):N0}");
+      int points = Random.Range(1, 5) * 100;
+
+      ScoreController.LerpScoreValue(_currentScore, _currentScore - points, 0.5f);
+      _currentScore -= points;
+
+      PopupController.PopupMiss(position, $"-{points:N0}");
     };
 
-    ScoreController.SetScoreValue(0);
+    _currentScore = 0;
+
+    ScoreController.SetScoreValue(_currentScore);
     TimerController.StartTimer(60f, 0f);
   }
 }
