@@ -12,10 +12,14 @@ public class TimerController : MonoBehaviour {
     DOTween.Kill(TimerValue.GetInstanceID());
 
     DOVirtual
-        .Float(startValue, endValue, Mathf.Abs(endValue - startValue), v => TimerValue.SetText($"{v:N2}"))
+        .Float(startValue, endValue, Mathf.Abs(endValue - startValue), v => SetTimerValue(v))
         .SetEase(Ease.Linear)
         .SetLink(TimerValue.gameObject)
         .SetId(TimerValue.GetInstanceID());
+  }
+
+  private void SetTimerValue(float value) {
+    TimerValue.SetText($"{value:00}<sup>{Mathf.Repeat(value, 1f) * 100:00}</sup>");
   }
 
   public void StopTimer() {
