@@ -12,14 +12,24 @@ public class PopupController : MonoBehaviour {
   [field: SerializeField, Header("Miss")]
   public TMPro.TMP_Text MissLabel { get; private set; }
 
-  public void PopupHit(Vector2 position) {
-    GameObject popup = Instantiate(HitLabel.gameObject, position, Quaternion.identity, ParentCanvas.transform);
-    PopupLabel(popup.GetComponent<TMPro.TMP_Text>());
+  public void PopupHit(Vector2 popupPosition, string hitText) {
+    GameObject popup = Instantiate(HitLabel.gameObject, popupPosition, Quaternion.identity, ParentCanvas.transform);
+    popup.SetActive(true);
+
+    TMPro.TMP_Text popupText = popup.GetComponent<TMPro.TMP_Text>();
+    popupText.SetText(hitText);
+
+    PopupLabel(popupText);
   }
 
-  public void PopupMiss(Vector2 position) {
-    GameObject popup = Instantiate(MissLabel.gameObject, position, Quaternion.identity, ParentCanvas.transform);
-    PopupLabel(popup.GetComponent<TMPro.TMP_Text>());
+  public void PopupMiss(Vector2 popupPosition, string missText) {
+    GameObject popup = Instantiate(MissLabel.gameObject, popupPosition, Quaternion.identity, ParentCanvas.transform);
+    popup.SetActive(true);
+
+    TMPro.TMP_Text popupText = popup.GetComponent<TMPro.TMP_Text>();
+    popupText.SetText(missText);
+
+    PopupLabel(popupText);
   }
 
   public void PopupLabel(TMPro.TMP_Text label) {

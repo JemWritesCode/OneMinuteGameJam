@@ -18,11 +18,11 @@ public class PopupControllerEditor : Editor {
     EditorGUILayout.BeginHorizontal();
 
     if (GUILayout.Button("PopupHit")) {
-      _popupController.PopupHit(new Vector2(100f, 100f));
+      _popupController.PopupHit(new Vector2(100f, 100f), "+500");
     }
 
     if (GUILayout.Button("PopupMiss")) {
-      _popupController.PopupMiss(new Vector2(100f, 100f));
+      _popupController.PopupMiss(new Vector2(100f, 100f), "-300");
     }
 
     EditorGUILayout.EndHorizontal();
