@@ -19,7 +19,7 @@ public class TimerController : MonoBehaviour {
   }
 
   private void SetTimerValue(float value) {
-    TimerValue.SetText($"{value:00}<sup>{Mathf.Repeat(value, 1f) * 100:00}</sup>");
+    TimerValue.SetText($"{value:00'<size=0%>'.'</size><sup>'00'</sup>'}");
   }
 
   public void StopTimer() {
