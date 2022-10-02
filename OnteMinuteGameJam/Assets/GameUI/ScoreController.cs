@@ -75,7 +75,7 @@ public class ScoreControllerEditor : Editor {
 
     if (_lerpScoreHeaderGroup) {
       _lerpScoreStartValue = EditorGUILayout.IntField("StartValue", _lerpScoreStartValue);
-      _lerpScoreEndValue = EditorGUILayout.IntField("StartValue", _lerpScoreEndValue);
+      _lerpScoreEndValue = EditorGUILayout.IntField("EndValue", _lerpScoreEndValue);
       _lerpScoreDuration = EditorGUILayout.Slider("Duration", _lerpScoreDuration, 0f, 5f);
 
       if (GUILayout.Button("LerpScoreValue", GUILayout.MinWidth(125f))) {
