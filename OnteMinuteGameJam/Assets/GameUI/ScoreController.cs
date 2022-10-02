@@ -14,13 +14,15 @@ public class ScoreController : MonoBehaviour {
     ScoreValue.SetText($"{value:G0}");
   }
 
-  public void LerpScoreValue(int startValue, int endValue, float duration, Color lerpColor) {
+  public void LerpScoreValue(int startValue, int endValue, float duration, Color lerpColor, float lerpFontSizeOffset) {
     DOTween.Kill(ScoreValue.GetInstanceID(), complete: true);
 
     DOTween.Sequence()
         .SetLink(ScoreValue.gameObject)
         .SetId(ScoreValue.GetInstanceID())
         .Insert(0f, ScoreValue.DOCounter(startValue, endValue, duration, false))
-        .Insert(0f, ScoreValue.DOColor(lerpColor, duration / 2f).SetLoops(2, LoopType.Yoyo));
+        .Insert(0f, ScoreValue.DOColor(lerpColor, duration / 2f).SetLoops(2, LoopType.Yoyo))
+        .Insert(
+            0f, ScoreValue.DOFontSize(lerpFontSizeOffset, duration / 2f).SetRelative(true).SetLoops(2, LoopType.Yoyo));
   }
 }
