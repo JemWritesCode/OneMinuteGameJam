@@ -24,10 +24,10 @@ public class MoleManager : MonoBehaviour
     [SerializeField] GameObject basicMole;
     [SerializeField] [Range(0, 50)] int poolSize = 5;
     [SerializeField] [Range(0.1f, 30f)] float spawnTimeInterval = 1f;
+    public List<Vector3> placeableTilesPositionList = new List<Vector3>();
 
     GameObject[] molePool;
 
-    List<Vector2> placeableTilesList = new List<Vector2>();
 
     void Start()
     {
@@ -59,8 +59,6 @@ public class MoleManager : MonoBehaviour
 
     private void EnableObjectInPool()
     {
-
-       
         for (int i = 0; i < molePool.Length; i++)
         {
             if (molePool[i].activeInHierarchy == false)
@@ -75,6 +73,12 @@ public class MoleManager : MonoBehaviour
 
     public void BuildPlaceableTilesArray()
     {
-        // placeableTilesList.Add() //add the tile coordinate vector2
+        Tiles[] allTilesArray = (Tiles[])GameObject.FindObjectsOfType(typeof(Tiles));
+
+        foreach(Tiles tile in allTilesArray)
+        {
+            if (tile.IsPlaceable == true)
+                placeableTilesPositionList.Add(tile.transform.position); // this gives us the vector3. y is always 0 but x and z change 
+        }
     }
 }

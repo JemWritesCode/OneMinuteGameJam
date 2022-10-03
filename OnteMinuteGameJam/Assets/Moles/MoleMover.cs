@@ -5,14 +5,38 @@ using UnityEngine;
 
 public class MoleMover : MonoBehaviour
 {
+    [SerializeField] MoleManager moleManager;
+    [SerializeField] GameObject manager;
+
+    private void Awake()
+    {
+        manager = GameObject.Find("MoleManager");
+        moleManager = manager.GetComponent<MoleManager>();
+    }
+
     private void OnEnable()
     {
+        if (!manager)
+        {
+            manager = GameObject.Find("MoleManager");
+            moleManager = manager.GetComponent<MoleManager>();
+        }
         MovePumpkinToRandomSpot();
     }
 
+
+    //private void OnEnable()
+    //{
+        
+    //}
+
     private void MovePumpkinToRandomSpot()
     {
-        //transform.position = //a random coordinate that is placeable ( I need an array of the placeable tiles coordinates)
-        //also need to check that there isn't 
+        if (moleManager.placeableTilesPositionList.Count > 0)
+        {
+            var random = new System.Random();
+            int randomIndex = random.Next(moleManager.placeableTilesPositionList.Count);
+            transform.position = moleManager.placeableTilesPositionList[randomIndex];
+        }
     }
 }
