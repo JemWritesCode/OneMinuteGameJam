@@ -27,9 +27,12 @@ public class MoleManager : MonoBehaviour
 
     GameObject[] molePool;
 
+    List<Vector2> placeableTilesList = new List<Vector2>();
+
     void Start()
     {
         PopulatePool();
+        BuildPlaceableTilesArray();
         StartCoroutine(SpawnEnemy());
     }
 
@@ -49,10 +52,10 @@ public class MoleManager : MonoBehaviour
         while (true) //jem todo til the timer runs out?
         {
             EnableObjectInPool();
-            // MovePumpkinToRandomPlace();?
             yield return new WaitForSeconds(spawnTimeInterval); //jemtodo this is probably where I change the intervals of spawning to vary for difficulty?
         }
     }
+
 
     private void EnableObjectInPool()
     {
@@ -67,5 +70,11 @@ public class MoleManager : MonoBehaviour
                 return;
             }
         }
+    }
+
+
+    public void BuildPlaceableTilesArray()
+    {
+        // placeableTilesList.Add() //add the tile coordinate vector2
     }
 }

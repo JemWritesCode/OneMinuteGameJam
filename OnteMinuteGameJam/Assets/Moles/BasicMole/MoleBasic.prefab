@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5747373175008496453}
   - component: {fileID: 3591145200210021948}
+  - component: {fileID: 158490454702152036}
   m_Layer: 0
   m_Name: MoleBasic
   m_TagString: Untagged
@@ -46,6 +47,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 66b816a10d23db14da2334196abbacbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moleTimeUp: 1
+  moleSpeed: 0.00001
+  molePopupDelay: 2
+  molePopupTargetY: -0.051
+  molePopupDuration: 5
+  molePopupWait: 1
+--- !u!114 &158490454702152036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5747373175008270181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8b0f3c6cfc611a4ca531f31df9d33f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5747373175008270185
