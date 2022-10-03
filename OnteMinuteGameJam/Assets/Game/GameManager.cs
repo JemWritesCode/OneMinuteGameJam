@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour {
   [field: SerializeField]
@@ -34,32 +35,30 @@ public class GameManager : MonoBehaviour {
     }
 
     _mouseClickListener = gameObject.AddComponent<MouseClickListener>();
-
-    _mouseClickListener.OnLeftMouseButtonDown += (_, position) => {
-      int points = Random.Range(1, 5) * 100;
-
-      ScoreController.LerpScoreValue(
-          _currentScore, _currentScore + points, 0.5f, ScoreIncreaseColor, ScoreIncreaseFontSizeOffset);
-
-      _currentScore += points;
-
-      PopupController.PopupHit(position, $"+{points:N0}");
-    };
-
-    _mouseClickListener.OnRightMouseButtonDown += (_, position) => {
-      int points = Random.Range(1, 5) * 100;
-
-      ScoreController.LerpScoreValue(
-          _currentScore, _currentScore - points, 0.5f, ScoreDecreaseColor, ScoreDecreaseFontSizeOffset);
-
-      _currentScore -= points;
-
-      PopupController.PopupMiss(position, $"-{points:N0}");
-    };
+    _mouseClickListener.OnLeftMouseButtonDown += (_, position) => ProcessHit(position, Random.Range(1, 5) * 100);
+    _mouseClickListener.OnRightMouseButtonDown += (_, position) => ProcessMiss(position, Random.Range(1, 5) * 100);
 
     _currentScore = 0;
 
     ScoreController.SetScoreValue(_currentScore);
     TimerController.StartTimer(60f, 0f);
+  }
+
+  public void ProcessHit(Vector2 popupPosition, int pointsGained) {
+    ScoreController.LerpScoreValue(
+        _currentScore, _currentScore + pointsGained, 0.5f, ScoreIncreaseColor, ScoreIncreaseFontSizeOffset);
+
+    _currentScore += pointsGained;
+
+    PopupController.PopupHit(popupPosition, $"+{pointsGained:N0}");
+  }
+
+  public void ProcessMiss(Vector2 popupPosition, int pointsLost) {
+    ScoreController.LerpScoreValue(
+        _currentScore, _currentScore - pointsLost, 0.5f, ScoreDecreaseColor, ScoreDecreaseFontSizeOffset);
+
+    _currentScore -= pointsLost;
+
+    PopupController.PopupMiss(popupPosition, $"-{pointsLost:N0}");
   }
 }
