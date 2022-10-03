@@ -4,7 +4,22 @@ using UnityEngine;
 
 public class TimerController : MonoBehaviour {
   [field: SerializeField, Header("TMP")]
-  public TMPro.TMP_Text TimerValue { private set; get; }
+  public TMPro.TMP_Text TimerLabel { get; private set; }
+
+  [field: SerializeField]
+  public TMPro.TMP_Text TimerValue { get; private set; }
+
+  public void AnimateIn() {
+    DOTween.Kill(gameObject.GetInstanceID(), complete: true);
+
+    DOTween.Sequence()
+        .Insert(0f, TimerLabel.DOFade(0f, 2f).From().SetEase(Ease.Linear))
+        .Insert(0f, TimerLabel.transform.DOLocalMoveX(25f, 2f).From(true))
+        .Insert(0.5f, TimerValue.DOFade(0f, 2f).From().SetEase(Ease.Linear))
+        .Insert(0.5f, TimerValue.transform.DOMoveX(25f, 2f).From(true))
+        .SetLink(gameObject)
+        .SetId(gameObject.GetInstanceID());
+  }
 
   public void StartTimer(float startValue, float endValue) {
     DOTween.Kill(TimerValue.GetInstanceID());

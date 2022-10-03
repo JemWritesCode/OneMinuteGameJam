@@ -16,12 +16,21 @@ public class TimerControllerEditor : Editor {
     EditorGUI.BeginDisabledGroup(!Application.isPlaying);
 
     EditorGUILayout.Space(25f);
+    AnimateGUI();
+
+    EditorGUILayout.Space(25f);
     StartTimerGUI();
 
     EditorGUILayout.Space(25f);
     StopTimerGUI();
 
     EditorGUI.EndDisabledGroup();
+  }
+
+  private void AnimateGUI() {
+    if (GUILayout.Button("AnimateIn")) {
+      _timerController.AnimateIn();
+    }
   }
 
   private bool _startTimerHeaderGroup = true;
