@@ -12,6 +12,9 @@ public class PopupController : MonoBehaviour {
   [field: SerializeField, Header("Miss")]
   public TMPro.TMP_Text MissLabel { get; private set; }
 
+  [field: SerializeField, Header("Combo")]
+  public TMPro.TMP_Text ComboLabel { get; private set; }
+
   public void PopupHit(Vector2 popupPosition, string hitText) {
     GameObject popup = Instantiate(HitLabel.gameObject, popupPosition, Quaternion.identity, ParentCanvas.transform);
     popup.SetActive(true);
