@@ -22,7 +22,12 @@ public class PopupController : MonoBehaviour {
     TMPro.TMP_Text popupText = popup.GetComponent<TMPro.TMP_Text>();
     popupText.SetText(hitText);
 
-    PopupLabel(popupText);
+    DOTween.Sequence()
+        .SetLink(popup)
+        .Insert(0f, popup.transform.DOPunchScale(Vector3.one * 0.75f, 1f, 3, 0f))
+        .Insert(0f, popup.transform.DOMoveY(25f, 2f).SetRelative(true))
+        .Insert(0.5f, popupText.DOFade(0f, 1.5f))
+        .OnComplete(() => Destroy(popup));
   }
 
   public void PopupMiss(Vector2 popupPosition, string missText) {
@@ -32,15 +37,27 @@ public class PopupController : MonoBehaviour {
     TMPro.TMP_Text popupText = popup.GetComponent<TMPro.TMP_Text>();
     popupText.SetText(missText);
 
-    PopupLabel(popupText);
+    DOTween.Sequence()
+        .SetLink(popup)
+        .Insert(0f, popup.transform.DOPunchScale(Vector3.one * -0.25f, 1f, 3, 0f))
+        .Insert(0f, popup.transform.DOMoveY(-25f, 2f).SetRelative(true))
+        .Insert(0.5f, popupText.DOFade(0f, 1.5f))
+        .OnComplete(() => Destroy(popup));
   }
 
-  public void PopupLabel(TMPro.TMP_Text label) {
+  public void PopupCombo(Vector2 popupPosition, string comboText) {
+    GameObject popup = Instantiate(ComboLabel.gameObject, popupPosition, Quaternion.identity, ParentCanvas.transform);
+    popup.SetActive(true);
+
+    TMPro.TMP_Text popupText = popup.GetComponent<TMPro.TMP_Text>();
+    popupText.SetText(comboText);
+
     DOTween.Sequence()
-        .SetLink(label.gameObject)
-        .Insert(0f, label.transform.DOPunchScale(new Vector3(1.01f, 1.01f, 1.01f), 1f, 5, 0))
-        .Insert(0f, label.transform.DOMoveY(25f, 2f).SetRelative(true))
-        .Insert(0.5f, label.DOFade(0f, 1.5f))
-        .OnComplete(() => Destroy(label.gameObject));
+        .SetLink(popup)
+        .Insert(0f, popup.transform.DOMoveX(10f, 0.75f).SetRelative(true))
+        .Insert(0f, popupText.DOFade(0f, 0.25f).From())
+        .Insert(1.25f, popup.transform.DOMoveX(10f, 0.5f).SetRelative(true))
+        .Insert(1.25f, popupText.DOFade(0f, 0.25f))
+        .OnComplete(() => Destroy(popup));
   }
 }
