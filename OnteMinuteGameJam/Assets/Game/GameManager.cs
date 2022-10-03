@@ -29,7 +29,9 @@ public class GameManager : MonoBehaviour {
 
   private Camera _targetCamera;
   private MouseClickListener _mouseClickListener;
+
   private int _currentScore = 0;
+  private int _currentCombo = 0;
 
   public void StartNewGame() {
     _targetCamera = Camera.main;
@@ -43,7 +45,9 @@ public class GameManager : MonoBehaviour {
     _mouseClickListener.OnLeftMouseButtonDown += (_, position) => ProcessLeftClick(position);
     _mouseClickListener.OnRightMouseButtonDown += (_, position) => ProcessMiss(position, Random.Range(1, 5) * 100);
 
+
     _currentScore = 0;
+    _currentCombo = 0;
 
     ScoreController.SetScoreValue(_currentScore);
     TimerController.StartTimer(60f, 0f);
@@ -76,8 +80,13 @@ public class GameManager : MonoBehaviour {
         _currentScore, _currentScore + pointsGained, 0.5f, ScoreIncreaseColor, ScoreIncreaseFontSizeOffset);
 
     _currentScore += pointsGained;
+    _currentCombo++;
 
     PopupController.PopupHit(popupPosition, $"+{pointsGained:N0}");
+
+    if (_currentCombo >= 3) {
+      PopupController.PopupCombo(Vector2.zero, $"{_currentCombo}<sup>Combo</sup>");
+    }
   }
 
   public void ProcessMiss(Vector2 popupPosition, int pointsLost) {
@@ -87,5 +96,11 @@ public class GameManager : MonoBehaviour {
     _currentScore -= pointsLost;
 
     PopupController.PopupMiss(popupPosition, $"-{pointsLost:N0}");
+
+    if (_currentCombo >= 3) {
+      PopupController.PopupComboBroken(Vector2.zero, $"{_currentCombo++}<sup>Broken!</sup>");
+    }
+
+    _currentCombo = 0;
   }
 }

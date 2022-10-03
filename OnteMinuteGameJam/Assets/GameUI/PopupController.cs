@@ -15,9 +15,11 @@ public class PopupController : MonoBehaviour {
   [field: SerializeField, Header("Combo")]
   public TMPro.TMP_Text ComboLabel { get; private set; }
 
+  [field: SerializeField]
+  public GameObject PopupComboParent { get; private set; }
+
   public void PopupHit(Vector2 popupPosition, string hitText) {
     GameObject popup = Instantiate(HitLabel.gameObject, popupPosition, Quaternion.identity, ParentCanvas.transform);
-    popup.SetActive(true);
 
     TMPro.TMP_Text popupText = popup.GetComponent<TMPro.TMP_Text>();
     popupText.SetText(hitText);
@@ -32,7 +34,6 @@ public class PopupController : MonoBehaviour {
 
   public void PopupMiss(Vector2 popupPosition, string missText) {
     GameObject popup = Instantiate(MissLabel.gameObject, popupPosition, Quaternion.identity, ParentCanvas.transform);
-    popup.SetActive(true);
 
     TMPro.TMP_Text popupText = popup.GetComponent<TMPro.TMP_Text>();
     popupText.SetText(missText);
@@ -46,18 +47,40 @@ public class PopupController : MonoBehaviour {
   }
 
   public void PopupCombo(Vector2 popupPosition, string comboText) {
-    GameObject popup = Instantiate(ComboLabel.gameObject, popupPosition, Quaternion.identity, ParentCanvas.transform);
-    popup.SetActive(true);
+    DOTween.Kill(ComboLabel.GetInstanceID(), complete: true);
+
+    GameObject popup = Instantiate(ComboLabel.gameObject, PopupComboParent.transform);
+    popup.transform.localPosition = popupPosition;
 
     TMPro.TMP_Text popupText = popup.GetComponent<TMPro.TMP_Text>();
     popupText.SetText(comboText);
 
     DOTween.Sequence()
         .SetLink(popup)
+        .SetId(ComboLabel.GetInstanceID())
         .Insert(0f, popup.transform.DOMoveX(10f, 0.75f).SetRelative(true))
-        .Insert(0f, popupText.DOFade(0f, 0.25f).From())
-        .Insert(1.25f, popup.transform.DOMoveX(10f, 0.5f).SetRelative(true))
-        .Insert(1.25f, popupText.DOFade(0f, 0.25f))
+        .Insert(0f, popupText.DOFade(0f, 0.15f).From())
+        .Insert(0.85f, popup.transform.DOMoveX(25f, 0.5f).SetRelative(true))
+        .Insert(0.85f, popupText.DOFade(0f, 0.25f))
+        .OnComplete(() => Destroy(popup));
+  }
+
+  public void PopupComboBroken(Vector2 popupPosition, string brokenText) {
+    DOTween.Kill(ComboLabel.GetInstanceID(), complete: true);
+
+    GameObject popup = Instantiate(ComboLabel.gameObject, PopupComboParent.transform);
+    popup.transform.localPosition = popupPosition;
+
+    TMPro.TMP_Text popupText = popup.GetComponent<TMPro.TMP_Text>();
+    popupText.SetText(brokenText);
+
+    DOTween.Sequence()
+        .SetLink(popup)
+        .SetId(ComboLabel.GetInstanceID())
+        .Insert(0f, popup.transform.DOMoveX(-10f, 0.75f).SetRelative(true))
+        .Insert(0f, popupText.DOFade(0f, 0.15f).From())
+        .Insert(0.25f, popupText.DOColor(Color.red, 1.5f).SetEase(Ease.InOutFlash, 8, 0f))
+        .Insert(1.75f, popupText.DOFade(0f, 0.25f))
         .OnComplete(() => Destroy(popup));
   }
 }

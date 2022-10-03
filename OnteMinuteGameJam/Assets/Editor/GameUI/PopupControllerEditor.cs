@@ -34,8 +34,17 @@ public class PopupControllerEditor : Editor {
       _popupController.PopupMiss(_popupPosition, "-300");
     }
 
+    EditorGUILayout.EndHorizontal();
+
+    EditorGUILayout.Space(25f);
+    EditorGUILayout.BeginHorizontal();
+
     if (GUILayout.Button("PopupCombo")) {
-      _popupController.PopupCombo(_popupPosition, $"{_comboCounter++}<sup>Combo</sup>");
+      _popupController.PopupCombo(Vector2.zero, $"{_comboCounter++}<sup>Combo</sup>");
+    }
+
+    if (GUILayout.Button("PopupComboBroken")) {
+      _popupController.PopupComboBroken(Vector2.zero, $"{_comboCounter++}<sup>Broken!</sup>");
     }
 
     EditorGUILayout.EndHorizontal();
