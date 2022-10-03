@@ -1,5 +1,6 @@
+using DG.Tweening;
+
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour {
   [field: SerializeField]
@@ -26,22 +27,48 @@ public class GameManager : MonoBehaviour {
   [field: SerializeField, Header("Popup")]
   public PopupController PopupController { get; private set; }
 
+  private Camera _targetCamera;
   private MouseClickListener _mouseClickListener;
   private int _currentScore = 0;
 
   public void StartNewGame() {
+    _targetCamera = Camera.main;
+
     if (_mouseClickListener) {
       Destroy(_mouseClickListener);
     }
 
     _mouseClickListener = gameObject.AddComponent<MouseClickListener>();
     _mouseClickListener.OnLeftMouseButtonDown += (_, position) => ProcessHit(position, Random.Range(1, 5) * 100);
+    _mouseClickListener.OnLeftMouseButtonDown += (_, position) => ProcessLeftClick(position);
     _mouseClickListener.OnRightMouseButtonDown += (_, position) => ProcessMiss(position, Random.Range(1, 5) * 100);
 
     _currentScore = 0;
 
     ScoreController.SetScoreValue(_currentScore);
     TimerController.StartTimer(60f, 0f);
+  }
+
+  public void StopCurrentGame() {
+    TimerController.StopTimer();
+
+    if (_mouseClickListener) {
+      Destroy(_mouseClickListener);
+    }
+  }
+
+  public void ProcessLeftClick(Vector2 mousePosition) {
+    Ray ray = _targetCamera.ScreenPointToRay(mousePosition);
+    Debug.DrawRay(ray.origin, ray.direction * 20f, Color.yellow);
+
+    if (Physics.Raycast(ray, out RaycastHit hitInfo, 50f)) {
+      //Debug.Log($"{mousePosition} -> ({hitInfo.collider.name}: {hitInfo.point})");
+      //GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+      //sphere.transform.localScale = Vector3.zero;
+      //sphere.transform.SetPositionAndRotation(hitInfo.point, Quaternion.identity);
+      //Destroy(sphere.GetComponentInChildren<Collider>());
+      //sphere.transform.DOScale(Vector3.one, 3f).SetLink(sphere).OnComplete(() => Destroy(sphere));
+    }
   }
 
   public void ProcessHit(Vector2 popupPosition, int pointsGained) {

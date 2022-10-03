@@ -16,9 +16,17 @@ public class GameManagerEditor : Editor {
     EditorGUI.BeginDisabledGroup(!Application.isPlaying);
     EditorGUILayout.Space(25f);
 
+    EditorGUILayout.BeginHorizontal();
+
     if (GUILayout.Button("StartNewGame")) {
       _gameManager.StartNewGame();
     }
+
+    if (GUILayout.Button("StopCurrentGame")) {
+      _gameManager.StopCurrentGame();
+    }
+
+    EditorGUILayout.EndHorizontal();
 
     EditorGUI.EndDisabledGroup();
   }
