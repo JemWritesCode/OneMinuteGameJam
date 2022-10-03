@@ -44,6 +44,7 @@ public class MoleManager : MonoBehaviour
         {
             molePool[i] = Instantiate(basicMole, transform);
             molePool[i].SetActive(false);
+            molePool[i].tag = "Mole";
         }
     }
 
