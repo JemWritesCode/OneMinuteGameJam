@@ -41,8 +41,8 @@ public class GameManager : MonoBehaviour {
     }
 
     _mouseClickListener = gameObject.AddComponent<MouseClickListener>();
-    _mouseClickListener.OnLeftMouseButtonDown += (_, position) => ProcessHit(position, Random.Range(1, 5) * 100);
     _mouseClickListener.OnLeftMouseButtonDown += (_, position) => ProcessLeftClick(position);
+    _mouseClickListener.OnCenterMouseButtonDown += (_, position) => ProcessHit(position, Random.Range(1, 5) * 100);
     _mouseClickListener.OnRightMouseButtonDown += (_, position) => ProcessMiss(position, Random.Range(1, 5) * 100);
 
 
@@ -66,12 +66,10 @@ public class GameManager : MonoBehaviour {
     Debug.DrawRay(ray.origin, ray.direction * 20f, Color.yellow);
 
     if (Physics.Raycast(ray, out RaycastHit hitInfo, 50f)) {
-      //Debug.Log($"{mousePosition} -> ({hitInfo.collider.name}: {hitInfo.point})");
-      //GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-      //sphere.transform.localScale = Vector3.zero;
-      //sphere.transform.SetPositionAndRotation(hitInfo.point, Quaternion.identity);
-      //Destroy(sphere.GetComponentInChildren<Collider>());
-      //sphere.transform.DOScale(Vector3.one, 3f).SetLink(sphere).OnComplete(() => Destroy(sphere));
+      if (hitInfo.collider.CompareTag("Mole")) {
+        Debug.Log($"Hit mole! {mousePosition} -> {hitInfo.collider.name}: {hitInfo.point}");
+        ProcessHit(mousePosition, 100 + (_currentCombo * 100));
+      }
     }
   }
 
