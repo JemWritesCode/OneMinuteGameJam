@@ -27,6 +27,9 @@ public class GameManager : MonoBehaviour {
   [field: SerializeField, Header("Popup")]
   public PopupController PopupController { get; private set; }
 
+  [field: SerializeField, Header("GameOver")]
+  public GameOverController GameOverController { get; private set; }
+
   private Camera _targetCamera;
   private MouseClickListener _mouseClickListener;
 
@@ -34,7 +37,11 @@ public class GameManager : MonoBehaviour {
   private int _currentCombo = 0;
 
   public void StartNewGame() {
-    _targetCamera = Camera.main;
+    if (!_targetCamera) {
+      _targetCamera = Camera.main;
+    }
+
+    GameOverController.HideGameOver();
 
     if (_mouseClickListener) {
       Destroy(_mouseClickListener);
@@ -59,6 +66,8 @@ public class GameManager : MonoBehaviour {
     if (_mouseClickListener) {
       Destroy(_mouseClickListener);
     }
+
+    GameOverController.ShowGameOver();
   }
 
   public void ProcessLeftClick(Vector2 mousePosition) {
