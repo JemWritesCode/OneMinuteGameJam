@@ -29,14 +29,19 @@ public class MoleMover : MonoBehaviour
 
     private void MovePumpkinToRandomSpot()
     {
-        if (moleManager.placeableTilesPositionList.Count > 0)
+        if (moleManager.placeableTiles.Count > 0)
         {
             var random = new System.Random();
-            int randomIndex = random.Next(moleManager.placeableTilesPositionList.Count);
-            Vector3 randomPosition = moleManager.placeableTilesPositionList[randomIndex];
-            Vector3 molePosition = new Vector3(randomPosition.x, -0.479f, randomPosition.z);
+            Tiles randomTile;
+            do
+            {
+                int randomIndex = random.Next(moleManager.placeableTiles.Count);
+                randomTile = moleManager.placeableTiles[randomIndex];
+            } while (randomTile.tileHasMole); //keep picking a random tile until you find one that doesn't already have a mole
+            Vector3 molePosition = new Vector3(randomTile.transform.position.x, -0.479f, randomTile.transform.position.z);
+            randomTile.tileHasMole = true;
             transform.position = molePosition;
-            updown.moleGoesUpAndDown(1f); //hardcoded one second for up and down but may want to vary this at some point
+            updown.moleGoesUpAndDown(1f, randomTile); //hardcoded one second for up and down but may want to vary this at some point
         }
     }
 }

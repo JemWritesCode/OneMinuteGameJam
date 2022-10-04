@@ -24,7 +24,7 @@ public class MoleManager : MonoBehaviour
     [SerializeField] GameObject basicMole;
     [SerializeField] [Range(0, 50)] int poolSize = 5;
     [SerializeField] [Range(0.1f, 30f)] float spawnTimeInterval = 1f;
-    public List<Vector3> placeableTilesPositionList = new List<Vector3>();
+    public List<Tiles> placeableTiles = new List<Tiles>();
 
     GameObject[] molePool;
 
@@ -65,7 +65,7 @@ public class MoleManager : MonoBehaviour
             if (molePool[i].activeInHierarchy == false)
             {
                 molePool[i].SetActive(true);
-                molePool[i].GetComponent<UpDown>().moleGoesUpAndDown(1f);
+               // molePool[i].GetComponent<UpDown>().moleGoesUpAndDown(1f);
                 return;
             }
         }
@@ -79,7 +79,7 @@ public class MoleManager : MonoBehaviour
         foreach(Tiles tile in allTilesArray)
         {
             if (tile.IsPlaceable == true)
-                placeableTilesPositionList.Add(tile.transform.position); // this gives us the vector3. y is always 0 but x and z change 
+                placeableTiles.Add(tile); 
         }
     }
 }

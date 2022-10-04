@@ -16,7 +16,7 @@ public class UpDown : MonoBehaviour
     public float molePopupWait = 1f; // how long does it wait before going back down
 
 
-    public void moleGoesUpAndDown(float molePopupWait)
+    public void moleGoesUpAndDown(float molePopupWait, Tiles tile)
     {
         //jemtodo : maybe add particle effects of vines growing or dirt moving when the pumpkin goes up and down
 
@@ -28,11 +28,12 @@ public class UpDown : MonoBehaviour
           .AppendInterval(molePopupWait)
           .Append(transform.DOMoveY(originalY, molePopupDuration))
           .SetTarget(gameObject)
-          .OnComplete(() => DeactivateMole());
+          .OnComplete(() => DeactivateMole(tile));
     }
 
-    private void DeactivateMole()
+    private void DeactivateMole(Tiles tile)
     {
         gameObject.SetActive(false);
+        tile.tileHasMole = false;
     }
 }
