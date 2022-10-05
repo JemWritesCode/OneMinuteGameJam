@@ -92,10 +92,15 @@ public class GameManager : MonoBehaviour {
 
     MoleManager.OnMoleUpDownEnd -= OnMoleMiss;
 
+    int pumpkinsTotal = MoleManager.EnemiesSpawnedCount;
+    int pumpkinsOnBoard = GameObject.FindGameObjectsWithTag("Mole").Where(go => go.activeInHierarchy).Count();
+
+    Debug.Log($"EnemiesSpawnedCount {pumpkinsTotal}, PumpkinsOnBoard: {pumpkinsOnBoard}");
+
     GameOverController.ShowGameOver(
         _currentScore,
         _highestCombo,
-        MoleManager ? MoleManager.EnemiesSpawnedCount : 0,
+        pumpkinsTotal - pumpkinsOnBoard,
         _currentHits);
   }
 
