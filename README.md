@@ -1,6 +1,7 @@
 # OneMinuteGameJam
-Our game for https://itch.io/jam/one-minute-game-jam-8 -- Smashing Pumpkins ! 
-It's a Halloween themed version of Wack-a-mole
+Our game for [The One Minute Game Jam](https://itch.io/jam/one-minute-game-jam-8) called [Smashing Pumpkins](https://jemwritescode.itch.io/smashingpumpkins)
+
+It's a Halloween themed version of Wack-a-mole. 
 
 
 ## Team
