@@ -27,6 +27,7 @@ public class UpDown : MonoBehaviour
           .AppendInterval(molePopupWait)
           .Append(transform.DOMoveY(originalY, molePopupDuration))
           .AppendCallback(upDownEndCallback)
+          .Insert(0f, transform.DOShakeRotation(molePopupDuration))
           .SetTarget(gameObject)
           .OnComplete(() => DeactivateMole(tile));
     }
