@@ -8,9 +8,8 @@ public class MoleDeath : MonoBehaviour
     public void KillMole()
     {
         tileMoleIsOn = GetComponent<MoleMover>().randomTile;
+        AudioSource.PlayClipAtPoint(GetComponent<AudioSource>().clip, Camera.main.transform.position);
         gameObject.GetComponent<UpDown>().DeactivateMole(tileMoleIsOn);
-        //Debug.Log("Mole died!");
 
-        //jemtodo add effects for death
     }
 }

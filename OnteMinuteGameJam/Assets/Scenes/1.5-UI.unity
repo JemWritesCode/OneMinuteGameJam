@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1430,7 +1430,7 @@ MonoBehaviour:
   <TimerController>k__BackingField: {fileID: 1526344228}
   <PopupController>k__BackingField: {fileID: 1259450593}
   <GameOverController>k__BackingField: {fileID: 713629998}
-  <GameTotalTime>k__BackingField: 15
+  <GameTotalTime>k__BackingField: 60
 --- !u!1 &1231457938
 GameObject:
   m_ObjectHideFlags: 0
