@@ -1,4 +1,4 @@
-using DG.Tweening;
+using System.Linq;
 
 using UnityEngine;
 
@@ -33,6 +33,9 @@ public class GameManager : MonoBehaviour {
   [field: SerializeField, Min(0f), Header("GameSettings")]
   public float GameTotalTime { get; private set; }
 
+  [field: SerializeField, Header("Mole")]
+  public MoleManager MoleManager { get; private set; }
+
   private Camera _targetCamera;
   private MouseClickListener _mouseClickListener;
 
@@ -41,6 +44,10 @@ public class GameManager : MonoBehaviour {
   private int _highestCombo = 0;
 
   public void Start() {
+    if (!MoleManager) {
+      MoleManager = FindObjectsOfType<MoleManager>().FirstOrDefault();
+    }
+
     StartNewGame();
   }
 
@@ -75,7 +82,9 @@ public class GameManager : MonoBehaviour {
       Destroy(_mouseClickListener);
     }
 
-    GameOverController.ShowGameOver(_currentScore, _highestCombo);
+    int pumpkinsTotal = MoleManager ? MoleManager.EnemiesSpawnedCount : 0;
+
+    GameOverController.ShowGameOver(_currentScore, _highestCombo, pumpkinsTotal);
   }
 
   public void ProcessLeftClick(Vector2 mousePosition) {

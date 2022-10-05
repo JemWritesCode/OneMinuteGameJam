@@ -23,15 +23,17 @@ public class GameOverControllerEditor : Editor {
 
   private int _highestComboValue = 0;
   private int _finalScoreValue = 0;
+  private int _pumpkinsTotal = 0;
 
   private void ShowHideGameOverGUI() {
     _highestComboValue = EditorGUILayout.IntField("HighestComboValue", _highestComboValue);
     _finalScoreValue = EditorGUILayout.IntField("FinalScoreValue", _finalScoreValue);
+    _pumpkinsTotal = EditorGUILayout.IntField("PumpkinsTotal", _pumpkinsTotal);
 
     EditorGUILayout.BeginHorizontal();
 
     if (GUILayout.Button("ShowGameOver")) {
-      _gameOverController.ShowGameOver(_highestComboValue, _finalScoreValue);
+      _gameOverController.ShowGameOver(_highestComboValue, _finalScoreValue, _pumpkinsTotal);
     }
 
     if (GUILayout.Button("HideGameOver")) {

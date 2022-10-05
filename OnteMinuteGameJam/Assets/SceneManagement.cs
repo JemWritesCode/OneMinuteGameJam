@@ -4,22 +4,28 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneManagement : MonoBehaviour {
-  private GameManager _gameManager;
+  [field: SerializeField, Header("Managers")]
+  public MoleManager MoleManager { get; private set; }
 
-  void Start() {
+  [field: SerializeField]
+  public GameManager GameManager { get; private set; }
+
+  public void Start() {
     Scene scene = SceneManager.GetSceneByName("1.5-UI");
 
     if (!scene.IsValid()) {
       scene = SceneManager.LoadScene("1.5-UI", new LoadSceneParameters(LoadSceneMode.Additive));
     }
 
-    _gameManager =
+    GameManager =
         scene.GetRootGameObjects()
             .Where(go => go && go.CompareTag("GameManager"))
             .Select(go => go.GetComponent<GameManager>())
             .FirstOrDefault();
 
-    if (!_gameManager) {
+    if (GameManager) {
+      // If needed.
+    } else {
       Debug.LogError($"Could not find GameManager after scene load.");
     }
   }
