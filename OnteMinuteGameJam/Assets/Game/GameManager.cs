@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour {
       Destroy(_mouseClickListener);
     }
 
-    GameOverController.ShowGameOver();
+    GameOverController.ShowGameOver(_currentScore, _currentCombo); // TODO: fix me to be highestCombo
   }
 
   public void ProcessLeftClick(Vector2 mousePosition) {

@@ -21,11 +21,17 @@ public class GameOverControllerEditor : Editor {
     EditorGUI.EndDisabledGroup();
   }
 
+  private int _highestComboValue = 0;
+  private int _finalScoreValue = 0;
+
   private void ShowHideGameOverGUI() {
+    _highestComboValue = EditorGUILayout.IntField("HighestComboValue", _highestComboValue);
+    _finalScoreValue = EditorGUILayout.IntField("FinalScoreValue", _finalScoreValue);
+
     EditorGUILayout.BeginHorizontal();
 
     if (GUILayout.Button("ShowGameOver")) {
-      _gameOverController.ShowGameOver();
+      _gameOverController.ShowGameOver(_highestComboValue, _finalScoreValue);
     }
 
     if (GUILayout.Button("HideGameOver")) {
