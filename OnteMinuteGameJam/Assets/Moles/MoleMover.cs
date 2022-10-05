@@ -41,7 +41,10 @@ public class MoleMover : MonoBehaviour
             Vector3 molePosition = new Vector3(randomTile.transform.position.x, -0.479f, randomTile.transform.position.z);
             randomTile.tileHasMole = true;
             transform.position = molePosition;
-            updown.moleGoesUpAndDown(1f, randomTile); //hardcoded one second for up and down but may want to vary this at some point
+            updown.MoleGoesUpAndDown(
+                1f, //hardcoded one second for up and down but may want to vary this at some point
+                randomTile,
+                () => moleManager.InvokeMoleUpDownEnd(transform.position)); 
         }
     }
 }

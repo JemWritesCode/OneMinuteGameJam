@@ -18,6 +18,7 @@ public class MoleManager : MonoBehaviour
     GameObject[] molePool;
 
     public int EnemiesSpawnedCount { get; private set; }
+    public event EventHandler<Vector3> OnMoleUpDownEnd;
 
     void Start()
     {
@@ -29,6 +30,9 @@ public class MoleManager : MonoBehaviour
         InvokeRepeating("reduceSpawnInterval", 1, 1);
     }
 
+    public void InvokeMoleUpDownEnd(Vector3 molePosition) {
+      OnMoleUpDownEnd?.Invoke(this, molePosition);
+    }
 
     private void reduceSpawnInterval()
     {

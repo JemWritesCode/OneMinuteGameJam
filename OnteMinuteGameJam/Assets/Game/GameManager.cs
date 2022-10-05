@@ -65,8 +65,14 @@ public class GameManager : MonoBehaviour {
 
     _mouseClickListener = gameObject.AddComponent<MouseClickListener>();
     _mouseClickListener.OnLeftMouseButtonDown += (_, position) => ProcessLeftClick(position);
-    _mouseClickListener.OnCenterMouseButtonDown += (_, position) => ProcessHit(position, Random.Range(1, 5) * 100);
-    _mouseClickListener.OnRightMouseButtonDown += (_, position) => ProcessMiss(position, Random.Range(1, 5) * 100);
+
+    if (Application.isEditor) {
+      _mouseClickListener.OnCenterMouseButtonDown += (_, position) => ProcessHit(position, Random.Range(1, 5) * 100);
+      _mouseClickListener.OnRightMouseButtonDown += (_, position) => ProcessMiss(position, Random.Range(1, 5) * 100);
+    }
+
+    MoleManager.OnMoleUpDownEnd -= OnMoleMiss;
+    MoleManager.OnMoleUpDownEnd += OnMoleMiss;
 
     _currentHits = 0;
     _currentScore = 0;
@@ -121,6 +127,13 @@ public class GameManager : MonoBehaviour {
     if (_currentCombo > _highestCombo) {
       _highestCombo = _currentCombo;
     }
+  }
+  
+  private void OnMoleMiss(object sender, Vector3 molePosition) {
+    Vector3 popupPosition = _targetCamera.WorldToScreenPoint(molePosition);
+    Debug.Log($"Mole miss: {molePosition} -> {popupPosition}");
+
+    ProcessMiss(popupPosition, 100);
   }
 
   public void ProcessMiss(Vector2 popupPosition, int pointsLost) {

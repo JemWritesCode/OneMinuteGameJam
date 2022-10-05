@@ -14,17 +14,19 @@ public class UpDown : MonoBehaviour
 
     Sequence upDownSequence;
 
-    public void moleGoesUpAndDown(float molePopupWait, Tiles tile)
-    {
-        //jemtodo : maybe add particle effects of vines growing or dirt moving when the pumpkin goes up and down
+    public void MoleGoesUpAndDown(float molePopupWait, Tiles tile) {
+      MoleGoesUpAndDown(molePopupWait, tile, () => { });
+    }
 
-        var originalY = transform.position.y;
-
-        upDownSequence = DOTween.Sequence()
+    public void MoleGoesUpAndDown(float molePopupWait, Tiles tile, TweenCallback upDownEndCallback) {
+      //jemtodo : maybe add particle effects of vines growing or dirt moving when the pumpkin goes up and down
+      var originalY = transform.position.y;
+      upDownSequence = DOTween.Sequence()
           //.AppendInterval(molePopupDelay) 
           .Append(transform.DOMoveY(molePopupTargetY, molePopupDuration))
           .AppendInterval(molePopupWait)
           .Append(transform.DOMoveY(originalY, molePopupDuration))
+          .AppendCallback(upDownEndCallback)
           .SetTarget(gameObject)
           .OnComplete(() => DeactivateMole(tile));
     }
