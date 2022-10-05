@@ -8099,8 +8099,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   basicMole: {fileID: 5747373175008270181, guid: 420e9cabcbce9a94baf4827f2087ed38, type: 3}
   poolSize: 17
-  spawnTimeInterval: 12.1
-  placeableTilesPositionList: []
+  spawnTimeInterval: 2
+  placeableTiles: []
 --- !u!1001 &1597331506
 PrefabInstance:
   m_ObjectHideFlags: 0

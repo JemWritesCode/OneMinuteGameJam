@@ -15,6 +15,8 @@ public class UpDown : MonoBehaviour
     public float molePopupDuration = 5f;
     public float molePopupWait = 1f; // how long does it wait before going back down
 
+    Sequence upDownSequence;
+
 
     public void moleGoesUpAndDown(float molePopupWait, Tiles tile)
     {
@@ -22,7 +24,7 @@ public class UpDown : MonoBehaviour
 
         var originalY = transform.position.y;
 
-        DOTween.Sequence()
+        upDownSequence = DOTween.Sequence()
           //.AppendInterval(molePopupDelay) 
           .Append(transform.DOMoveY(molePopupTargetY, molePopupDuration))
           .AppendInterval(molePopupWait)
@@ -33,6 +35,7 @@ public class UpDown : MonoBehaviour
 
     public void DeactivateMole(Tiles tile)
     {
+        upDownSequence.Kill();
         gameObject.SetActive(false);
         tile.tileHasMole = false;
     }
