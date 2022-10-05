@@ -93,6 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc91eab8fffa1d64b814fe0885fc528c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pumpkinSplat: {fileID: 5279489225874583430, guid: 7bdbf46a866e14d4bb473a91b791d5cf, type: 3}
 --- !u!82 &7679834199655407369
 AudioSource:
   m_ObjectHideFlags: 0
