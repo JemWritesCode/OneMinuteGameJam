@@ -36,7 +36,13 @@ public class GameManager : MonoBehaviour {
   private int _currentScore = 0;
   private int _currentCombo = 0;
 
-  public void StartNewGame() {
+    public void Start()
+    {
+        StartNewGame();
+    }
+
+
+    public void StartNewGame() {
     if (!_targetCamera) {
       _targetCamera = Camera.main;
     }

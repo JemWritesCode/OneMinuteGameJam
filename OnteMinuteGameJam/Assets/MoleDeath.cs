@@ -9,7 +9,7 @@ public class MoleDeath : MonoBehaviour
     {
         tileMoleIsOn = GetComponent<MoleMover>().randomTile;
         gameObject.GetComponent<UpDown>().DeactivateMole(tileMoleIsOn);
-        Debug.Log("Mole died!");
+        //Debug.Log("Mole died!");
 
         //jemtodo add effects for death
     }
