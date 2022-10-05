@@ -1,4 +1,4 @@
-using DG.Tweening;
+using System.Linq;
 
 using UnityEngine;
 
@@ -33,14 +33,22 @@ public class GameManager : MonoBehaviour {
   [field: SerializeField, Min(0f), Header("GameSettings")]
   public float GameTotalTime { get; private set; }
 
+  [field: SerializeField, Header("Mole")]
+  public MoleManager MoleManager { get; private set; }
+
   private Camera _targetCamera;
   private MouseClickListener _mouseClickListener;
 
+  private int _currentHits = 0;
   private int _currentScore = 0;
   private int _currentCombo = 0;
   private int _highestCombo = 0;
 
   public void Start() {
+    if (!MoleManager) {
+      MoleManager = FindObjectsOfType<MoleManager>().FirstOrDefault();
+    }
+
     StartNewGame();
   }
 
@@ -60,6 +68,7 @@ public class GameManager : MonoBehaviour {
     _mouseClickListener.OnCenterMouseButtonDown += (_, position) => ProcessHit(position, Random.Range(1, 5) * 100);
     _mouseClickListener.OnRightMouseButtonDown += (_, position) => ProcessMiss(position, Random.Range(1, 5) * 100);
 
+    _currentHits = 0;
     _currentScore = 0;
     _currentCombo = 0;
     _highestCombo = 0;
@@ -75,7 +84,11 @@ public class GameManager : MonoBehaviour {
       Destroy(_mouseClickListener);
     }
 
-    GameOverController.ShowGameOver(_currentScore, _highestCombo);
+    GameOverController.ShowGameOver(
+        _currentScore,
+        _highestCombo,
+        MoleManager ? MoleManager.EnemiesSpawnedCount : 0,
+        _currentHits);
   }
 
   public void ProcessLeftClick(Vector2 mousePosition) {
@@ -95,6 +108,7 @@ public class GameManager : MonoBehaviour {
     ScoreController.LerpScoreValue(
         _currentScore, _currentScore + pointsGained, 0.5f, ScoreIncreaseColor, ScoreIncreaseFontSizeOffset);
 
+    _currentHits++;
     _currentScore += pointsGained;
     _currentCombo++;
 

@@ -17,9 +17,11 @@ public class MoleManager : MonoBehaviour
 
     GameObject[] molePool;
 
+    public int EnemiesSpawnedCount { get; private set; }
 
     void Start()
     {
+        EnemiesSpawnedCount = 0;
         PopulatePool();
         BuildPlaceableTilesArray();
         StartCoroutine(SpawnEnemy());
@@ -53,6 +55,7 @@ public class MoleManager : MonoBehaviour
         while (true) //jem todo til the timer runs out?
         {
             EnableObjectInPool();
+            EnemiesSpawnedCount++;
             yield return new WaitForSeconds(spawnTimeInterval); //jemtodo this is probably where I change the intervals of spawning to vary for difficulty?
         }
     }
