@@ -90,6 +90,8 @@ public class GameManager : MonoBehaviour {
       Destroy(_mouseClickListener);
     }
 
+    MoleManager.OnMoleUpDownEnd -= OnMoleMiss;
+
     GameOverController.ShowGameOver(
         _currentScore,
         _highestCombo,
