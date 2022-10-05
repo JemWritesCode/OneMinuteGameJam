@@ -78,6 +78,7 @@ public class GameManager : MonoBehaviour {
       if (hitInfo.collider.CompareTag("Mole")) {
         Debug.Log($"Hit mole! {mousePosition} -> {hitInfo.collider.name}: {hitInfo.point}");
         ProcessHit(mousePosition, 100 + (_currentCombo * 100));
+        hitInfo.collider.GetComponent<MoleDeath>().MoleDied();
       }
     }
   }

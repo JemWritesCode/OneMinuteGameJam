@@ -31,7 +31,7 @@ public class UpDown : MonoBehaviour
           .OnComplete(() => DeactivateMole(tile));
     }
 
-    private void DeactivateMole(Tiles tile)
+    public void DeactivateMole(Tiles tile)
     {
         gameObject.SetActive(false);
         tile.tileHasMole = false;

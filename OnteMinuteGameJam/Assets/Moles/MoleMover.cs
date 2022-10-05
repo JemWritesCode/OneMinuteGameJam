@@ -8,6 +8,7 @@ public class MoleMover : MonoBehaviour
     [SerializeField] MoleManager moleManager;
     [SerializeField] GameObject manager;
     [SerializeField] UpDown updown;
+    public Tiles randomTile;
 
     private void Awake()
     {
@@ -32,7 +33,6 @@ public class MoleMover : MonoBehaviour
         if (moleManager.placeableTiles.Count > 0)
         {
             var random = new System.Random();
-            Tiles randomTile;
             do
             {
                 int randomIndex = random.Next(moleManager.placeableTiles.Count);
