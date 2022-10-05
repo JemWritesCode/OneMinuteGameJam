@@ -27,6 +27,9 @@ public class GameOverController : MonoBehaviour {
   public TMPro.TMP_Text FinalScoreValue { get; private set; }
 
   [field: SerializeField, Header("Restart")]
+  public GameObject RestartButton { get; private set; }
+
+  [field: SerializeField]
   public TMPro.TMP_Text RestartButtonLabel { get; private set; }
 
   private CanvasGroup _canvasGroup;
@@ -34,10 +37,13 @@ public class GameOverController : MonoBehaviour {
   public void Awake() {
     _canvasGroup = GetComponent<CanvasGroup>();
     _canvasGroup.alpha = 0f;
+
+    RestartButton.SetActive(false);
   }
 
   public void ShowGameOver(int finalScore, int highestCombo, int pumpkinsTotal, int pumpkinsHit) {
     CameraEffect.enabled = true;
+    RestartButton.SetActive(true);
 
     DOTween.Kill(gameObject.GetInstanceID(), complete: true);
 
@@ -92,6 +98,7 @@ public class GameOverController : MonoBehaviour {
         .Insert(0f, DOTween.To(() => _canvasGroup.alpha, a => _canvasGroup.alpha = a, 0f, 0.5f));
 
     CameraEffect.enabled = false;
+    RestartButton.SetActive(false);
   }
 
   public void RestartGame() {

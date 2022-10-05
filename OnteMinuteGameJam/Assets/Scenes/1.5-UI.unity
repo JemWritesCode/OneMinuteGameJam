@@ -1147,6 +1147,7 @@ MonoBehaviour:
   <HighestComboValue>k__BackingField: {fileID: 1141970338}
   <FinalScoreLabel>k__BackingField: {fileID: 138863719}
   <FinalScoreValue>k__BackingField: {fileID: 1293760250}
+  <RestartButton>k__BackingField: {fileID: 503694776}
   <RestartButtonLabel>k__BackingField: {fileID: 2001019524}
 --- !u!225 &713629999
 CanvasGroup:
