@@ -7,16 +7,12 @@ using UnityEngine;
 
 public class UpDown : MonoBehaviour
 {
-    public float moleTimeUp = 1f;
-    public float moleSpeed = .00001f;
-
     //public float molePopupDelay = 2f; // how long does it wait before starting to go up
-    public float molePopupTargetY = -0.051f;
-    public float molePopupDuration = 5f;
-    public float molePopupWait = 1f; // how long does it wait before going back down
+    float molePopupTargetY = -0.051f;
+    float molePopupDuration = 1f;
+    float molePopupWait = 1f; // how long does it wait before going back down
 
     Sequence upDownSequence;
-
 
     public void moleGoesUpAndDown(float molePopupWait, Tiles tile)
     {

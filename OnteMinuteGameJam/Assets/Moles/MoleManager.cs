@@ -23,6 +23,17 @@ public class MoleManager : MonoBehaviour
         PopulatePool();
         BuildPlaceableTilesArray();
         StartCoroutine(SpawnEnemy());
+
+        InvokeRepeating("reduceSpawnInterval", 1, 1);
+    }
+
+
+    private void reduceSpawnInterval()
+    {
+        if (spawnTimeInterval >= .5f)
+        {
+            spawnTimeInterval -= .09f;
+        }
     }
 
     private void PopulatePool()
