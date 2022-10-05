@@ -1,3 +1,5 @@
+using System;
+
 using DG.Tweening;
 
 using UnityEngine;
@@ -21,14 +23,18 @@ public class TimerController : MonoBehaviour {
         .SetId(gameObject.GetInstanceID());
   }
 
-  public void StartTimer(float startValue, float endValue) {
+  private float _timerValue = 0f;
+
+  public void StartTimer(float startValue, float endValue, TweenCallback onTimerComplete) {
     DOTween.Kill(TimerValue.GetInstanceID());
 
-    DOVirtual
-        .Float(startValue, endValue, Mathf.Abs(endValue - startValue), v => SetTimerValue(v))
-        .SetEase(Ease.Linear)
-        .SetLink(TimerValue.gameObject)
-        .SetId(TimerValue.GetInstanceID());
+    _timerValue = startValue;
+    DOTween.To(() => _timerValue, t => _timerValue = t, endValue, Mathf.Abs(endValue - startValue))
+          .OnUpdate(() => SetTimerValue(_timerValue))
+          .SetEase(Ease.Linear)
+          .SetLink(TimerValue.gameObject)
+          .SetId(TimerValue.GetInstanceID())
+          .OnComplete(onTimerComplete);
   }
 
   private void SetTimerValue(float value) {
@@ -36,7 +42,7 @@ public class TimerController : MonoBehaviour {
   }
 
   public void StopTimer() {
-    DOTween.Kill(TimerValue.GetInstanceID());
+    DOTween.Kill(TimerValue.GetInstanceID(), true);
 
     DOTween.Sequence()
         .SetLink(TimerValue.gameObject)

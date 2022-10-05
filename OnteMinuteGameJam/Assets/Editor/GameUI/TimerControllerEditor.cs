@@ -45,7 +45,7 @@ public class TimerControllerEditor : Editor {
       _startTimerEndValue = EditorGUILayout.FloatField("EndValue", _startTimerEndValue);
 
       if (GUILayout.Button("StartTimer", GUILayout.MinWidth(125f))) {
-        _timerController.StartTimer(_startTimerStartValue, _startTimerEndValue);
+        _timerController.StartTimer(_startTimerStartValue, _startTimerEndValue, () => { });
       }
     }
 

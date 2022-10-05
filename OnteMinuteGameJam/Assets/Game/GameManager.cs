@@ -30,19 +30,21 @@ public class GameManager : MonoBehaviour {
   [field: SerializeField, Header("GameOver")]
   public GameOverController GameOverController { get; private set; }
 
+  [field: SerializeField, Min(0f), Header("GameSettings")]
+  public float GameTotalTime { get; private set; }
+
   private Camera _targetCamera;
   private MouseClickListener _mouseClickListener;
 
   private int _currentScore = 0;
   private int _currentCombo = 0;
+  private int _highestCombo = 0;
 
-    public void Start()
-    {
-        StartNewGame();
-    }
+  public void Start() {
+    StartNewGame();
+  }
 
-
-    public void StartNewGame() {
+  public void StartNewGame() {
     if (!_targetCamera) {
       _targetCamera = Camera.main;
     }
@@ -58,12 +60,12 @@ public class GameManager : MonoBehaviour {
     _mouseClickListener.OnCenterMouseButtonDown += (_, position) => ProcessHit(position, Random.Range(1, 5) * 100);
     _mouseClickListener.OnRightMouseButtonDown += (_, position) => ProcessMiss(position, Random.Range(1, 5) * 100);
 
-
     _currentScore = 0;
     _currentCombo = 0;
+    _highestCombo = 0;
 
     ScoreController.SetScoreValue(_currentScore);
-    TimerController.StartTimer(60f, 0f);
+    TimerController.StartTimer(GameTotalTime, 0f, () => StopCurrentGame());
   }
 
   public void StopCurrentGame() {
@@ -73,7 +75,7 @@ public class GameManager : MonoBehaviour {
       Destroy(_mouseClickListener);
     }
 
-    GameOverController.ShowGameOver(_currentScore, _currentCombo); // TODO: fix me to be highestCombo
+    GameOverController.ShowGameOver(_currentScore, _highestCombo);
   }
 
   public void ProcessLeftClick(Vector2 mousePosition) {
@@ -100,6 +102,10 @@ public class GameManager : MonoBehaviour {
 
     if (_currentCombo >= 3) {
       PopupController.PopupCombo(Vector2.zero, $"{_currentCombo}<sup>Combo</sup>");
+    }
+
+    if (_currentCombo > _highestCombo) {
+      _highestCombo = _currentCombo;
     }
   }
 
