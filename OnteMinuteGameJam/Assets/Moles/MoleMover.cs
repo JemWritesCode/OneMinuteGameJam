@@ -41,10 +41,15 @@ public class MoleMover : MonoBehaviour
             Vector3 molePosition = new Vector3(randomTile.transform.position.x, -0.479f, randomTile.transform.position.z);
             randomTile.tileHasMole = true;
             transform.position = molePosition;
-            updown.MoleGoesUpAndDown(
-                1f, //hardcoded one second for up and down but may want to vary this at some point
-                randomTile,
-                () => moleManager.InvokeMoleUpDownEnd(transform.position)); 
+
+            if (moleManager.EnemiesSpawnedCount > 5 && UnityEngine.Random.Range(0, 1f) < 0.5f) {
+              updown.MoleGoesSuperSaiyan(1f, randomTile, () => moleManager.InvokeMoleUpDownEnd(transform.position));
+            } else {
+              updown.MoleGoesUpAndDown(
+                  1f, //hardcoded one second for up and down but may want to vary this at some point
+                  randomTile,
+                  () => moleManager.InvokeMoleUpDownEnd(transform.position));
+            }
         }
     }
 }

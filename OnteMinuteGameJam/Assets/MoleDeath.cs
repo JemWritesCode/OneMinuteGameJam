@@ -5,11 +5,18 @@ using UnityEngine;
 public class MoleDeath : MonoBehaviour
 {
     Tiles tileMoleIsOn;
+
     [SerializeField] ParticleSystem pumpkinSplat;
-    public void KillMole()
+
+    [field: SerializeField]
+    public ParticleSystem PumpkinExplosion { get; private set; }
+
+    public void KillMole(bool isExploding = false)
     {
-        ParticleSystem splat = Instantiate(pumpkinSplat, transform.position, Quaternion.identity);
+        ParticleSystem splat =
+            Instantiate(isExploding ? PumpkinExplosion : pumpkinSplat, transform.position, Quaternion.identity);
         Destroy(splat, .5f);
+
         tileMoleIsOn = GetComponent<MoleMover>().randomTile;
         AudioSource.PlayClipAtPoint(GetComponent<AudioSource>().clip, Camera.main.transform.position);
         gameObject.GetComponent<UpDown>().DeactivateMole(tileMoleIsOn);

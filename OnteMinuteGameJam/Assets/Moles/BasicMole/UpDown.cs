@@ -28,12 +28,32 @@ public class UpDown : MonoBehaviour
           .Append(transform.DOMoveY(originalY, molePopupDuration))
           .AppendCallback(upDownEndCallback)
           .Insert(0f, transform.DOShakeRotation(molePopupDuration))
-          .SetTarget(gameObject)
+          .SetLink(gameObject)
           .OnComplete(() => DeactivateMole(tile));
     }
 
-    public void DeactivateMole(Tiles tile)
-    {
+    public void MoleGoesSuperSaiyan(float molePopupWait, Tiles tile, TweenCallback upDownEndCallback) {
+      Debug.Log($"We going super sayain at: {transform.position}");
+
+      upDownSequence =
+          DOTween.Sequence()
+              .Insert(0f, transform.DOMoveY(molePopupTargetY, molePopupDuration))
+              .Insert(0f, transform.DOShakeRotation(molePopupDuration))
+              .Insert(molePopupDuration, transform.DOPunchScale(Vector3.one * 1.20f, 1 + molePopupDuration, elasticity: 0f))
+              .Insert(molePopupDuration, transform.DOJump(transform.position +  transform.forward * 1f, 1f, 2, 2 + molePopupDuration))
+              .InsertCallback(molePopupDuration + molePopupDuration + 1, upDownEndCallback)
+              .SetLink(gameObject)
+              .OnComplete(
+                  () => {
+                    if (TryGetComponent(out MoleDeath moleDeath)) {
+                      moleDeath.KillMole(isExploding: true);
+                    } else {
+                      DeactivateMole(tile);
+                    }
+                  });
+    }
+
+    public void DeactivateMole(Tiles tile) {
         upDownSequence.Kill();
         gameObject.SetActive(false);
         tile.tileHasMole = false;

@@ -94,6 +94,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pumpkinSplat: {fileID: 5279489225874583430, guid: 7bdbf46a866e14d4bb473a91b791d5cf, type: 3}
+  <PumpkinExplosion>k__BackingField: {fileID: 8255215019295333939, guid: b75b0369de91cba4dbcf68d6d480ec22, type: 3}
 --- !u!82 &7679834199655407369
 AudioSource:
   m_ObjectHideFlags: 0
