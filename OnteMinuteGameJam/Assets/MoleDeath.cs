@@ -15,7 +15,7 @@ public class MoleDeath : MonoBehaviour
     {
         ParticleSystem splat =
             Instantiate(isExploding ? PumpkinExplosion : pumpkinSplat, transform.position, Quaternion.identity);
-        Destroy(splat, .5f);
+        Destroy(splat.gameObject, .5f);
 
         tileMoleIsOn = GetComponent<MoleMover>().randomTile;
         AudioSource.PlayClipAtPoint(GetComponent<AudioSource>().clip, Camera.main.transform.position);

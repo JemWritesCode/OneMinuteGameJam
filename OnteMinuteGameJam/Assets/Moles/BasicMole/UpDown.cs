@@ -40,7 +40,10 @@ public class UpDown : MonoBehaviour
               .Insert(0f, transform.DOMoveY(molePopupTargetY, molePopupDuration))
               .Insert(0f, transform.DOShakeRotation(molePopupDuration))
               .Insert(molePopupDuration, transform.DOPunchScale(Vector3.one * 1.20f, 1 + molePopupDuration, elasticity: 0f))
-              .Insert(molePopupDuration, transform.DOJump(transform.position +  transform.forward * 1f, 1f, 2, 2 + molePopupDuration))
+              .Insert(
+                  molePopupDuration,
+                  transform.DOJump(
+                      transform.position + transform.forward * 1f + transform.up * 0.5f, 0.5f, 2, 1 + molePopupDuration))
               .InsertCallback(molePopupDuration + molePopupDuration + 1, upDownEndCallback)
               .SetLink(gameObject)
               .OnComplete(
